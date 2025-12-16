@@ -1,0 +1,5 @@
+{
+  "name": "Polkadot 3D Ecosystem Explorer",
+  "description": "An interactive, immersive 3D visualization of the Polkadot network architecture, featuring Relay Chains, Parachains, and dApps in a futuristic data-space environment.",
+  "requestFramePermissions": []
+}
