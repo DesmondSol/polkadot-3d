@@ -11,18 +11,18 @@ declare global {
     interface IntrinsicElements {
       ambientLight: any;
       pointLight: any;
-      color: any;
       fog: any;
+      color: any;
       group: any;
       mesh: any;
-      meshStandardMaterial: any;
-      meshPhysicalMaterial: any;
-      meshBasicMaterial: any;
-      sphereGeometry: any;
       torusGeometry: any;
+      sphereGeometry: any;
       cylinderGeometry: any;
       boxGeometry: any;
       octahedronGeometry: any;
+      meshStandardMaterial: any;
+      meshPhysicalMaterial: any;
+      meshBasicMaterial: any;
     }
   }
 }
@@ -108,6 +108,8 @@ const RelayChain = ({
                 transparent 
                 opacity={0.6}
                 transmission={0.5}
+                emissive={POLKADOT_PINK}
+                emissiveIntensity={0.2}
               />
             </mesh>
             {/* Inner light */}
@@ -162,7 +164,9 @@ const ParachainNode = ({
   // Floating animation
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.position.y = y + Math.sin(state.clock.elapsedTime + index) * 0.2;
+      // FIX: Use local coordinates (oscillate around 0). 
+      // The parent group is already positioned at [x, y, z].
+      meshRef.current.position.y = Math.sin(state.clock.elapsedTime + index) * 0.2;
     }
   });
 
@@ -171,17 +175,17 @@ const ParachainNode = ({
       {/* Connection to Layer 0 */}
       <Line 
         points={[start, end]} 
-        color={isSelected ? POLKADOT_PINK : "#444"} 
-        lineWidth={isSelected ? 2 : 1} 
+        color={isSelected ? POLKADOT_PINK : "#999999"} // Lighter grey for better visibility
+        lineWidth={isSelected ? 3 : 1} 
         transparent 
-        opacity={0.3} 
+        opacity={0.6} // Increased opacity
         dashed={true}
         dashScale={5}
         dashSize={0.5}
-        dashOffset={0} // Ideally animate this but simple Line doesn't support easy offset anim without ref
+        dashOffset={0} 
       />
       {/* Animated Particles on the line */}
-      <Sparkles count={5} scale={1} size={2} speed={2} opacity={0.5} color="white" noise={0} position={[x/2, y/2, z/2]} />
+      <Sparkles count={5} scale={1} size={3} speed={2} opacity={0.8} color="white" noise={0} position={[x/2, y/2, z/2]} />
 
       {/* The Parachain Node */}
       <group position={position}>
@@ -193,7 +197,14 @@ const ParachainNode = ({
         >
           {/* Main Body */}
           <cylinderGeometry args={[0.5, 0.5, 0.2, 32]} />
-          <meshStandardMaterial color={data.color} metalness={0.6} roughness={0.2} />
+          {/* Added emissive properties to ensure it's not black */}
+          <meshStandardMaterial 
+            color={data.color} 
+            metalness={0.5} 
+            roughness={0.2} 
+            emissive={data.color}
+            emissiveIntensity={0.5}
+          />
           
           {/* Glow Ring */}
           <mesh rotation={[Math.PI / 2, 0, 0]}>
@@ -220,7 +231,7 @@ const ParachainNode = ({
 
         {/* Label */}
         <Html position={[0, -0.8, 0]} center distanceFactor={12} style={{ pointerEvents: 'none' }}>
-          <div className={`px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap transition-all ${isSelected ? 'bg-white text-black scale-110' : 'bg-gray-900/60 text-gray-300'}`}>
+          <div className={`px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap transition-all ${isSelected ? 'bg-white text-black scale-110' : 'bg-gray-800 text-white border border-gray-600'}`}>
             {data.name}
           </div>
         </Html>
@@ -271,10 +282,10 @@ const DAppNode = ({
        {meshRef.current && (
            <Line 
              points={[[0, 0.1, 0], [meshRef.current.position.x, meshRef.current.position.y, meshRef.current.position.z]]} 
-             color="#aaa" 
-             lineWidth={0.5} 
+             color="#cccccc" 
+             lineWidth={1} 
              transparent 
-             opacity={0.2} 
+             opacity={0.4} 
            />
        )}
 
@@ -285,7 +296,12 @@ const DAppNode = ({
         onPointerOut={() => document.body.style.cursor = 'auto'}
       >
         <octahedronGeometry args={[0.2, 0]} />
-        <meshStandardMaterial color={isSelected ? 'white' : '#aaa'} wireframe={!isSelected} />
+        <meshStandardMaterial 
+            color={isSelected ? 'white' : '#dddddd'} 
+            wireframe={!isSelected} 
+            emissive={isSelected ? 'white' : '#888888'}
+            emissiveIntensity={0.3}
+        />
         
         {/* Hover/Selection Halo */}
         {(isSelected) && (
@@ -296,7 +312,7 @@ const DAppNode = ({
         )}
 
         <Html position={[0, 0.4, 0]} center distanceFactor={10} style={{ pointerEvents: 'none' }}>
-           <div className={`text-[8px] px-1 rounded ${isSelected ? 'bg-white text-black' : 'text-gray-400'}`}>
+           <div className={`text-[8px] px-1 rounded ${isSelected ? 'bg-white text-black' : 'text-gray-300'}`}>
               {data.name}
            </div>
         </Html>
@@ -331,9 +347,9 @@ export const PolkadotWorld: React.FC<PolkadotWorldProps> = ({
       <color attach="background" args={['#050205']} />
       
       {/* Lighting & Environment */}
-      <ambientLight intensity={0.2} />
-      <pointLight position={[10, 10, 10]} intensity={1} color={POLKADOT_PINK} />
-      <pointLight position={[-10, -5, -10]} intensity={0.5} color="blue" />
+      <ambientLight intensity={0.6} />
+      <pointLight position={[10, 10, 10]} intensity={1.5} color={POLKADOT_PINK} />
+      <pointLight position={[-10, -5, -10]} intensity={1} color="#4444ff" />
       <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
       <fog attach="fog" args={['#050205', 10, 30]} />
 
