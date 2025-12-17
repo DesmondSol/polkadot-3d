@@ -1,3 +1,4 @@
+
 import { NodeData, NodeType } from './types';
 
 export const POLKADOT_PINK = '#E6007A';
@@ -15,6 +16,10 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     description: 'The heart of Polkadot. It provides shared security, consensus, and interoperability for all connected blockchains (Parachains). It does not handle smart contracts directly, ensuring it remains lightweight and efficient.',
     technicalDetails: 'Uses NPoS (Nominated Proof-of-Stake) for consensus. Validators secure the network. Collators on parachains submit blocks to validators. It coordinates cross-chain message passing (XCM).',
     color: POLKADOT_PINK,
+    tokenTicker: 'DOT',
+    marketCap: '~$6.5B',
+    tps: '1,000+',
+    blockTime: '6s',
   },
   // Layer 1: Parachains
   {
@@ -26,6 +31,10 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     technicalDetails: 'Full EVM implementation, Web3 RPC compatible. Supports standard Ethereum tools like MetaMask, Hardhat, and Waffle.',
     color: '#D43384',
     bridgesTo: ['Ethereum'],
+    tokenTicker: 'GLMR',
+    marketCap: '~$250M',
+    tps: '2,000+',
+    blockTime: '12s',
   },
   {
     id: 'acala',
@@ -35,6 +44,10 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     description: 'The decentralized finance hub of Polkadot. It offers a stablecoin (aUSD), a decentralized exchange (DEX), and liquid staking protocols.',
     technicalDetails: 'Specialized DeFi chain with custom EVM+ for DeFi optimization. Built-in primitives for liquidity and staking.',
     color: '#645AFF',
+    tokenTicker: 'ACA',
+    marketCap: '~$50M',
+    tps: '1,000+',
+    blockTime: '12s',
   },
   {
     id: 'astar',
@@ -44,6 +57,10 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     description: 'A scalable network supporting multiple virtual machines, including EVM and WebAssembly (Wasm). A true innovation hub for dApps.',
     technicalDetails: 'Supports dApp staking (Build2Earn). Connects Polkadot to major L1 blockchains via bridges.',
     color: '#1b6dc1',
+    tokenTicker: 'ASTR',
+    marketCap: '~$100M',
+    tps: '2,000+',
+    blockTime: '12s',
   },
   {
     id: 'hydradx',
@@ -53,6 +70,10 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     description: 'A decentralized exchange protocol designed to bring liquidity to the Polkadot ecosystem using an Omnipool model.',
     technicalDetails: 'Substrate-based. Omnipool allows all assets to be traded against a single liquidity pool, reducing slippage and fragmentation.',
     color: '#55efc4',
+    tokenTicker: 'HDX',
+    marketCap: '~$15M',
+    tps: 'N/A',
+    blockTime: '12s',
   },
   {
     id: 'polimec',
@@ -62,6 +83,10 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     description: 'A decentralized community-driven funding protocol to accelerate the Web3 ecosystem.',
     technicalDetails: 'Compliance framework for fundraising. On-chain credentials.',
     color: '#fdcb6e',
+    tokenTicker: 'PLMC',
+    marketCap: '~$5M',
+    tps: '1,000',
+    blockTime: '12s',
   },
   // Layer 2: dApps (Children of Parachains)
   // Moonbeam dApps
@@ -73,6 +98,8 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     category: 'DEX',
     description: 'The leading DEX on Moonbeam, offering swapping, farming, and bridging features.',
     technicalDetails: 'Standard AMM model running on Moonbeam EVM.',
+    tokenTicker: 'STELLA',
+    marketCap: '~$2M',
   },
   {
     id: 'moonwell',
@@ -82,6 +109,8 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     category: 'Lending',
     description: 'An open lending and borrowing DeFi protocol on Moonbeam and Moonriver.',
     technicalDetails: 'Compound V2 fork adapted for the Polkadot ecosystem.',
+    tokenTicker: 'WELL',
+    marketCap: '~$20M',
   },
   // Acala dApps
   {
@@ -92,6 +121,8 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     category: 'Stablecoin',
     description: 'The native decentralized stablecoin of Polkadot, backed by multiple collateral assets.',
     technicalDetails: 'Over-collateralized stablecoin system integral to the Acala chain.',
+    tokenTicker: 'aUSD',
+    marketCap: 'Var',
   },
   {
     id: 'euphrates',
@@ -101,6 +132,8 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     category: 'Liquid Staking',
     description: 'Boosts staking rewards and liquidity for DOT holders.',
     technicalDetails: 'Liquid staking derivatives (LSD) protocol.',
+    tokenTicker: 'LDOT',
+    marketCap: 'N/A',
   },
   // Astar dApps
   {
@@ -111,6 +144,8 @@ export const ECOSYSTEM_DATA: NodeData[] = [
     category: 'DEX',
     description: 'A one-stop DeFi protocol on Astar Network with high APY farming.',
     technicalDetails: 'Comprehensive DeFi suite optimized for Wasm/EVM.',
+    tokenTicker: 'ARSW',
+    marketCap: '~$500k',
   }
 ];
 

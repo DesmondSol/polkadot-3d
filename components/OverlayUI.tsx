@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { NodeData, ViewMode, NodeType } from '../types';
 import { ECOSYSTEM_DATA, TOUR_STEPS } from '../constants';
@@ -11,7 +12,11 @@ import {
   Map,
   X,
   User,
-  ExternalLink
+  ExternalLink,
+  Activity,
+  Coins,
+  Clock,
+  Zap
 } from 'lucide-react';
 
 interface OverlayUIProps {
@@ -110,14 +115,48 @@ export const OverlayUI: React.FC<OverlayUIProps> = ({
                </p>
 
                {/* Advanced Content */}
-               {viewMode === 'advanced' && selectedNode.technicalDetails && (
-                 <div className="bg-white/5 rounded-lg p-4 border border-white/10 mb-4">
-                   <h3 className="text-[#570081] font-bold text-xs uppercase mb-2 flex items-center gap-2">
-                     <Maximize2 size={12} /> Technical Specifications
-                   </h3>
-                   <p className="text-gray-400 text-xs leading-relaxed font-mono">
-                     {selectedNode.technicalDetails}
-                   </p>
+               {viewMode === 'advanced' && (
+                 <div className="flex flex-col gap-4 mb-4">
+                   {/* Key Metrics Grid */}
+                   {(selectedNode.tokenTicker || selectedNode.marketCap || selectedNode.tps || selectedNode.blockTime) && (
+                     <div className="grid grid-cols-2 gap-2">
+                        {selectedNode.tokenTicker && (
+                          <div className="bg-white/5 p-2 rounded border border-white/10 flex flex-col">
+                            <span className="text-[10px] text-gray-500 uppercase flex items-center gap-1"><Coins size={10} /> Token</span>
+                            <span className="font-mono font-bold text-sm text-[#E6007A]">{selectedNode.tokenTicker}</span>
+                          </div>
+                        )}
+                        {selectedNode.marketCap && (
+                          <div className="bg-white/5 p-2 rounded border border-white/10 flex flex-col">
+                            <span className="text-[10px] text-gray-500 uppercase flex items-center gap-1"><Activity size={10} /> Market Cap</span>
+                            <span className="font-mono font-bold text-sm text-white">{selectedNode.marketCap}</span>
+                          </div>
+                        )}
+                        {selectedNode.tps && (
+                          <div className="bg-white/5 p-2 rounded border border-white/10 flex flex-col">
+                            <span className="text-[10px] text-gray-500 uppercase flex items-center gap-1"><Zap size={10} /> TPS (est)</span>
+                            <span className="font-mono font-bold text-sm text-cyan-300">{selectedNode.tps}</span>
+                          </div>
+                        )}
+                        {selectedNode.blockTime && (
+                          <div className="bg-white/5 p-2 rounded border border-white/10 flex flex-col">
+                            <span className="text-[10px] text-gray-500 uppercase flex items-center gap-1"><Clock size={10} /> Block Time</span>
+                            <span className="font-mono font-bold text-sm text-purple-300">{selectedNode.blockTime}</span>
+                          </div>
+                        )}
+                     </div>
+                   )}
+                   
+                   {selectedNode.technicalDetails && (
+                    <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                      <h3 className="text-[#570081] font-bold text-xs uppercase mb-2 flex items-center gap-2">
+                        <Maximize2 size={12} /> Technical Specifications
+                      </h3>
+                      <p className="text-gray-400 text-xs leading-relaxed font-mono">
+                        {selectedNode.technicalDetails}
+                      </p>
+                    </div>
+                   )}
                  </div>
                )}
 

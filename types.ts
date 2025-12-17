@@ -1,3 +1,4 @@
+
 export enum NodeType {
   RELAY_CHAIN = 'RELAY_CHAIN',
   PARACHAIN = 'PARACHAIN',
@@ -16,6 +17,12 @@ export interface NodeData {
   color?: string;
   position?: [number, number, number]; // Calculated at runtime or fixed
   bridgesTo?: string[]; // Names of external chains
+  
+  // Advanced Metrics
+  tokenTicker?: string;
+  marketCap?: string;
+  tps?: string;
+  blockTime?: string;
 }
 
 export type ViewMode = 'beginner' | 'advanced';
