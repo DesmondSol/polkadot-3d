@@ -5,27 +5,8 @@ import * as THREE from 'three';
 import { ECOSYSTEM_DATA, POLKADOT_PINK, POLKADOT_PURPLE } from '../constants';
 import { NodeType, NodeData } from '../types';
 
-// Augment the JSX namespace to satisfy TypeScript when @react-three/fiber types are not automatically picked up
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      ambientLight: any;
-      pointLight: any;
-      fog: any;
-      color: any;
-      group: any;
-      mesh: any;
-      torusGeometry: any;
-      sphereGeometry: any;
-      cylinderGeometry: any;
-      boxGeometry: any;
-      octahedronGeometry: any;
-      meshStandardMaterial: any;
-      meshPhysicalMaterial: any;
-      meshBasicMaterial: any;
-    }
-  }
-}
+// Note: Removed the manual global JSX declaration that was breaking standard HTML elements and prop validation.
+// @react-three/fiber types should be automatically picked up. If not, ensure @types/three and @react-three/fiber are installed.
 
 interface PolkadotWorldProps {
   onSelectNode: (id: string | null) => void;

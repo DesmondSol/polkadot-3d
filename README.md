@@ -66,5 +66,3 @@ A license file is not yet included. Choose and add one (e.g., MIT, Apache-2.0) t
 
 ## Troubleshooting
 - Black screen or nothing renders: ensure `index.html` includes `<script type="module" src="/index.tsx"></script>` (already fixed) and that the browser supports WebGL.
-- Missing dependencies: rerun `npm install`.
-- Slow rendering: lower device pixel ratio in `PolkadotWorld` (dpr) or reduce star/particle counts.

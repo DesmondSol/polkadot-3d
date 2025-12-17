@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NodeData, ViewMode, NodeType } from '../types';
 import { ECOSYSTEM_DATA, TOUR_STEPS } from '../constants';
 import { 
@@ -9,7 +9,9 @@ import {
   ChevronRight, 
   ChevronLeft, 
   Map,
-  X
+  X,
+  User,
+  ExternalLink
 } from 'lucide-react';
 
 interface OverlayUIProps {
@@ -41,6 +43,7 @@ export const OverlayUI: React.FC<OverlayUIProps> = ({
   onPrevTourStep,
   onEndTour
 }) => {
+  const [showAbout, setShowAbout] = useState(false);
   const selectedNode = selectedId ? ECOSYSTEM_DATA.find(n => n.id === selectedId) : null;
   const currentTour = TOUR_STEPS[tourStep];
 
@@ -58,20 +61,31 @@ export const OverlayUI: React.FC<OverlayUIProps> = ({
           </p>
         </div>
         
-        {/* Mode Toggle */}
-        <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full p-1 border border-white/10">
-          <button 
-            onClick={onToggleViewMode}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${viewMode === 'beginner' ? 'bg-[#E6007A] text-white' : 'text-gray-400 hover:text-white'}`}
-          >
-            Beginner
-          </button>
-          <button 
-            onClick={onToggleViewMode}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${viewMode === 'advanced' ? 'bg-[#570081] text-white' : 'text-gray-400 hover:text-white'}`}
-          >
-            Advanced
-          </button>
+        <div className="flex flex-col items-end gap-2">
+            {/* Mode Toggle */}
+            <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full p-1 border border-white/10">
+              <button 
+                onClick={onToggleViewMode}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${viewMode === 'beginner' ? 'bg-[#E6007A] text-white' : 'text-gray-400 hover:text-white'}`}
+              >
+                Beginner
+              </button>
+              <button 
+                onClick={onToggleViewMode}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${viewMode === 'advanced' ? 'bg-[#570081] text-white' : 'text-gray-400 hover:text-white'}`}
+              >
+                Advanced
+              </button>
+            </div>
+            
+            {/* About Button */}
+            <button 
+              onClick={() => setShowAbout(true)}
+              className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full border border-white/10 text-xs text-gray-300 hover:text-white transition-all"
+            >
+              <User size={12} />
+              <span>About Us</span>
+            </button>
         </div>
       </div>
 
@@ -199,8 +213,60 @@ export const OverlayUI: React.FC<OverlayUIProps> = ({
               </div>
             )}
          </div>
-
       </div>
+
+      {/* About Modal */}
+      {showAbout && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm pointer-events-auto p-4 animate-in fade-in duration-200">
+           <div className="bg-[#111] border border-[#E6007A]/50 p-6 md:p-8 rounded-2xl max-w-md w-full shadow-[0_0_50px_rgba(230,0,122,0.2)] relative">
+              <button 
+                onClick={() => setShowAbout(false)} 
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+              
+              <div className="flex flex-col items-center text-center mb-6">
+                 <div className="w-16 h-16 bg-[#E6007A]/10 rounded-full flex items-center justify-center mb-4 border border-[#E6007A]/30">
+                    <User size={32} className="text-[#E6007A]" />
+                 </div>
+                 <h2 className="text-2xl font-bold text-white mb-1">About Us</h2>
+                 <p className="text-gray-400 text-sm">Polkadot Ecosystem Explorer</p>
+              </div>
+
+              <div className="space-y-4">
+                 <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <p className="text-gray-300 text-sm mb-1">Created by</p>
+                    <a 
+                      href="https://x.com/solomon_t0" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex items-center justify-between text-lg font-bold text-white hover:text-[#E6007A] transition-colors group"
+                    >
+                      Solomon T
+                      <ExternalLink size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </a>
+                 </div>
+
+                 <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+                    <p className="text-gray-300 text-sm mb-2">Collaboration</p>
+                    <p className="text-white font-medium text-sm">
+                       Feel free to contact us for collab on open source projects.
+                    </p>
+                 </div>
+              </div>
+
+              <div className="mt-8 text-center">
+                 <button 
+                   onClick={() => setShowAbout(false)}
+                   className="text-gray-500 hover:text-white text-sm transition-colors"
+                 >
+                   Close
+                 </button>
+              </div>
+           </div>
+        </div>
+      )}
     </div>
   );
 };
